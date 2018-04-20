@@ -1,0 +1,90 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Title</title>  
+    <script src="./vue/dist/vue.js"></script>  
+</head>  
+<body>
+    <div id="ewe">
+        <input v-model.lazy="message" placeholder="edit me">
+        <p>Message is: {{ message }}</p>
+
+        <input type="number">
+        <input type="checkbox" id="checkbox" v-model.lazy="checkeed">
+        <label for="checkbox">{{ checkeed }}</label>
+    </div>
+
+
+    
+
+    <div id="todo-list-example">
+        <input 
+            placeholder="add a todo"
+            v-model="newToDoText"
+            @keyup.enter="addNewTodo"
+        >
+
+        <ul>
+            <li
+                is="todo-item"
+                v-for="(todo, index) in todos"
+                v-bind:key="todo.title"
+                v-bind:title="todo.title"
+                @removee="todos.splice(index, 1)"
+            ></li>
+        </ul>
+    </div>
+</body>  
+<script>  
+    Vue.component('todo-item', {
+        template: `
+            <li>
+                {{ title }}
+                <button v-on:click="$emit('removee')">X</button>
+            </li>
+        `,
+        props: ['title']
+    })
+
+    new Vue({
+        el: '#ewe',
+        data: {
+            message: '',
+            checkeed: false
+        }
+    })
+
+    new Vue({
+        el: '#todo-list-example',
+        data: {
+            newToDoText: '',
+            todos:[
+                {
+                    id: 1,
+                    title: 'apple'
+                },
+                {
+                    id: 2,
+                    title: 'pencel',
+                },
+                {
+                    id: 3,
+                    title: 'me'
+                }
+            ],
+            nextTodoId: 4
+        },
+        methods: {
+            addNewTodo: function(){
+                this.todos.push({
+                    id: this.nextTodoId++,
+                    title: this.newToDoText
+                })
+                this.newToDoText = '';
+            }
+        }
+    })
+
+</script>  
+</html>  
