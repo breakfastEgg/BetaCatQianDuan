@@ -1,14 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <router-link to="apple"></router-link>
     <h2>Essential Links</h2>
-    <input type="button" @click="sendData">
-    <slot><p>no content</p></slot>
-    <router-view></router-view>
-    <router-link :to="{name: 'h'}">apple</router-link>
-    <span @click="getParam">button</span>
-    <slot name="asd"></slot>
     <ul>
       <li>
         <a
@@ -92,21 +85,10 @@
 
 <script>
 export default {
-  props: {
-    msg: [Number, String]
-  },
   name: 'HelloWorld',
   data () {
     return {
-      dataToSend: 'dwiodjw'
-    }
-  },
-  methods: {
-    getParam () {
-      console.log(this.$route.params)
-    },
-    sendData () {
-      this.$emit('getData', this.dataToSend)
+      msg: 'Welcome to Your Vue.js App'
     }
   }
 }

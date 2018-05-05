@@ -1,76 +1,105 @@
 <template>
-  <div>
-      <div class="layui-layout layui-layout-admin">
-  <div class="layui-header">
-    <div class="layui-logo">layui 后台布局</div>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
-      <li class="layui-nav-item">
-        <a href="javascript:;">其它系统</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">邮件管理</a></dd>
-          <dd><a href="">消息管理</a></dd>
-          <dd><a href="">授权管理</a></dd>
-        </dl>
-      </li>
-    </ul>
-    <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item">
-        <a href="javascript:;">
-          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          贤心
-        </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
-        </dl>
-      </li>
-      <li class="layui-nav-item"><a href="">退了</a></li>
-    </ul>
-  </div>
-  <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">所有商品</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="javascript:;">列表三</a></dd>
-            <dd><a href="">超链接</a></dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">解决方案</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"><a href="">云市场</a></li>
-        <li class="layui-nav-item"><a href="">发布商品</a></li>
-      </ul>
+    <div class="layout">
+        <Sider v-if="show" :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
+            <Card :style="{background: `#495060`, border: 0, height: `64px`}" :padding="0">
+                <img src="../assets/logo.png">
+            </Card>
+            <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']">
+                <Submenu name="1">
+                    <template slot="title">
+                        <Icon type="ios-navigate"></Icon>
+                        Item 1
+                    </template>
+                    <MenuItem name="1-1">Option 1</MenuItem>
+                    <MenuItem name="1-2">Option 2</MenuItem>
+                    <MenuItem name="1-3">Option 3</MenuItem>
+                </Submenu>
+                <Submenu name="2">
+                    <template slot="title">
+                        <Icon type="ios-keypad"></Icon>
+                        Item 2
+                    </template>
+                    <MenuItem name="2-1">Option 1</MenuItem>
+                    <MenuItem name="2-2">Option 2</MenuItem>
+                </Submenu>
+                <Submenu name="3">
+                    <template slot="title">
+                        <Icon type="ios-analytics"></Icon>
+                        Item 3
+                    </template>
+                    <MenuItem name="3-1">Option 1</MenuItem>
+                    <MenuItem name="3-2">Option 2</MenuItem>
+                </Submenu>
+            </Menu>
+        </Sider>
+        <Layout :style="ifMargin">
+            <Header :style="{background: '#fff', padding: '0', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
+                <Menu mode="horizontal" :theme="theme1" active-name="1" :style="{height: '64px'}">
+                    <MenuItem name="1">
+                        <Icon type="ios-paper"></Icon>
+                        内容管理
+                    </MenuItem>
+                    <MenuItem name="2">
+                        <Icon type="ios-people"></Icon>
+                        用户管理
+                    </MenuItem>
+                    <Submenu name="3">
+                        <template slot="title">
+                        <Icon type="stats-bars"></Icon>
+                        统计分析
+                        </template>
+                        <MenuGroup title="使用">
+                            <MenuItem name="3-1">新增和启动</MenuItem>
+                            <MenuItem name="3-2">活跃分析</MenuItem>
+                            <MenuItem name="3-3">时段分析</MenuItem>
+                        </MenuGroup>
+                        <MenuGroup title="留存">
+                            <MenuItem name="3-4">用户留存</MenuItem>
+                            <MenuItem name="3-5">流失用户</MenuItem>
+                        </MenuGroup>
+                    </Submenu>
+                    <MenuItem name="4">
+                        <Icon type="settings"></Icon>
+                        综合设置
+                    </MenuItem>
+                </Menu>
+            </Header>
+            <Content :style="{padding: '10px'}">
+                <Card>
+                    <div class="dw">Content</div>
+                </Card>
+            </Content>
+        </Layout>
     </div>
-  </div>
-  <div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div style="padding: 15px;">内容主体区域</div>
-  </div>
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    © layui.com - 底部固定区域
-  </div>
-  </div>
-  </div>
 </template>
-
 <script>
 export default {
-  name: 'layout'
+data: function () {
+    return {
+      show: false
+    }
+  }
+,
+computed: {
+  ifMargin () {
+    return {
+      marginLeft: this.show? '200px': '0px'
+    }
+  }
+}
 }
 </script>
+<style scoped>
+    .layout{
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .layout-header-bar{
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+</style>
