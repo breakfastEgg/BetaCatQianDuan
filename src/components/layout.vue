@@ -34,7 +34,7 @@
         </Sider>
         <Layout :style="ifMargin">
             <Header :style="{background: '#fff', padding: '0', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
-                <Menu mode="horizontal" :theme="theme1" active-name="1" :style="{height: '64px'}">
+                <Menu mode="horizontal" active-name="1" :style="{height: '64px'}">
                     <MenuItem name="1">
                         <Icon type="ios-paper"></Icon>
                         内容管理
@@ -62,6 +62,21 @@
                         <Icon type="settings"></Icon>
                         综合设置
                     </MenuItem>
+                    <Submenu name="5" :style="{float: 'right'}">
+                        <template slot="title">
+                        <Icon type="stats-bars"></Icon>
+                        统计分析
+                        </template>
+                        <MenuGroup title="使用">
+                            <MenuItem name="3-1">新增和启动</MenuItem>
+                            <MenuItem name="3-2">活跃分析</MenuItem>
+                            <MenuItem name="3-3">时段分析</MenuItem>
+                        </MenuGroup>
+                        <MenuGroup title="留存">
+                            <MenuItem name="3-4">用户留存</MenuItem>
+                            <MenuItem name="3-5">流失用户</MenuItem>
+                        </MenuGroup>
+                    </Submenu>
                 </Menu>
             </Header>
             <Content :style="{padding: '10px'}">
@@ -74,19 +89,18 @@
 </template>
 <script>
 export default {
-data: function () {
+  data: function () {
     return {
-      show: false
+      show: true
+    }
+  },
+  computed: {
+    ifMargin () {
+      return {
+        marginLeft: this.show ? '200px' : '0px'
+      }
     }
   }
-,
-computed: {
-  ifMargin () {
-    return {
-      marginLeft: this.show? '200px': '0px'
-    }
-  }
-}
 }
 </script>
 <style scoped>

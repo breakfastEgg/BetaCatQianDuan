@@ -2,16 +2,20 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <!-- <router-view/> -->
-    <layout></layout>
+    <Layout>
+      <ChessBoard slot="content"></ChessBoard>
+    </Layout>
   </div>
 </template>
 
 <script>
-import layout from './components/layout'
+import Layout from './components/Layout2'
+import ChessBoard from './components/content/ChessBoard'
 export default {
   name: 'App',
   components: {
-    layout
+    Layout,
+    ChessBoard
   }
 }
 </script>
