@@ -59,8 +59,8 @@
             </Sider>
             <Layout :style="{padding: '10px'}">
                 <Card :style="{height: '100%'}">
-                        <slot name='content'>no Content</slot>
-                    </Card>
+                    <slot name='content'>no Content</slot>
+                </Card>
             </Layout>
         </Layout>
     </div>
