@@ -1,0 +1,60 @@
+[
+    {
+        "title": "所有项目",
+        "name": "1",
+        "icon": "ios-navigate",
+        "childrens": [
+            {
+                "title": "所有项目-项目1",
+                "name": "1-1", 
+                "icon": "ios-navigate",
+                "childrens": [
+                    {
+                        "title": "所有项目-项目1",
+                        "name": "1-1-1", 
+                        "icon": "",
+                        "childrens": []
+                    },
+                    {
+                        "title": "所有项目-项目2",
+                        "name": "1-1-2", 
+                        "icon": "",
+                        "childrens": []
+                    },
+                    {
+                        "title": "所有项目-项目3",
+                        "name": "1-1-3", 
+                        "icon": "",
+                        "childrens": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "我参与的项目",
+        "name": "1",
+        "icon": "ios-keypad",
+        "childrens": [
+            {
+                "title": "所有项目",
+                "name": "1-1", 
+                "icon": "",
+                "childrens": []
+            }
+        ]
+    },
+    {
+        "title": "已归档项目",
+        "name": "1",
+        "icon": "ios-analytics",
+        "childrens": [
+            {
+                "title": "所有项目",
+                "name": "1-1", 
+                "icon": "",
+                "childrens": []
+            }
+        ]
+    }
+]

@@ -28,7 +28,7 @@
                         Item 3
                     </template>
                     <MenuItem name="3-1">Option 1</MenuItem>
-                    <MenuItem name="3-2">Option 2</MenuItem>
+                    <MenuItem name="3-2">Option 322</MenuItem>
                 </Submenu>
             </Menu>
         </Sider>
@@ -37,7 +37,7 @@
                 <Menu mode="horizontal" active-name="1" :style="{height: '64px'}">
                     <MenuItem name="1">
                         <Icon type="ios-paper"></Icon>
-                        内容管理
+                        内13容管理
                     </MenuItem>
                     <MenuItem name="2">
                         <Icon type="ios-people"></Icon>

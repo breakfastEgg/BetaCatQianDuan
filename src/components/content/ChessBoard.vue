@@ -2,7 +2,8 @@
 <style scoped>
 </style>
 <template>
-  <canvas id="chess"></canvas>
+  <div>我是期盼</div>
+  <!-- <canvas id="chess"></canvas> -->
 </template>
 <script>
 let chess = function (id) {
