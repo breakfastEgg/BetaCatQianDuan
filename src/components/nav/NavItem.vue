@@ -43,7 +43,6 @@
                 <MenuItem name="1-3">Option 3</MenuItem>
             </Submenu>
         </div>
-        
     </div>
 </template>
 <script>

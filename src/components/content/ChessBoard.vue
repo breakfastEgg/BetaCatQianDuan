@@ -1,48 +1,78 @@
+//  deb784棋盘颜色
 <style scoped>
-  .chessboard {
-    -webkit-box-shadow: .1rem .1rem .05rem rgba(0,0,0,.5),
-                  -.1rem -.1rem .05rem rgba(0,0,0,.5) ;
-
-            box-shadow: .1rem .1rem .05rem rgba(0,0,0,.5),
-                  -.1rem -.1rem .05rem rgba(0,0,0,.5) ;
-    height: calc(19rem + 0.04rem);
-    width: calc(19rem + 0.04rem);
-    background: #daca39;
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.04rem, white), color-stop(0, transparent)), -webkit-gradient(linear, left top, right top, color-stop(0.04rem, white), color-stop(0, transparent));
-    background-image: -webkit-linear-gradient(white 0.04rem, transparent 0), -webkit-linear-gradient(left, white 0.04rem, transparent 0);
-    background-image: linear-gradient(white 0.04rem, transparent 0), linear-gradient(90deg, white 0.04rem, transparent 0);
-    -webkit-background-size: 1rem 1rem;
-            background-size: 1rem 1rem;
-}
-
-.chess {
-    position: relative;
-    height: 1rem;
-    width: 1rem;
-    border-radius: 0.5rem;
-    -webkit-box-shadow: .01rem .01rem .1rem rgba(0, 0, 0, .5), 0 0 .05rem rgba(240, 240, 240, .5), .05rem .05rem .01rem rgba(255, 255, 255, .15) inset, .1rem .1rem .1rem rgba(255, 255, 255, .05) inset, -.05rem -.05rem .25rem rgba(0, 0, 0, .15) inset, -.1rem -.1rem .35rem rgba(0, 0, 0, .05) inset;
-            box-shadow: .01rem .01rem .1rem rgba(0, 0, 0, .5), 0 0 .05rem rgba(240, 240, 240, .5), .05rem .05rem .01rem rgba(255, 255, 255, .15) inset, .1rem .1rem .1rem rgba(255, 255, 255, .05) inset, -.05rem -.05rem .25rem rgba(0, 0, 0, .15) inset, -.1rem -.1rem .35rem rgba(0, 0, 0, .05) inset;
-}
-
-.chess-white {
-    left:.5rem;
-    top:.5rem;
-    background: #EEE;
-}
-
-.chess-black {
-    background: #000;
-    left:10.5rem;
-    top:10.5rem;
-}
 </style>
 <template>
-  <div class="chessboard">
-    <div class="chess chess-white"></div>
-    <div class="chess chess-black"></div>
-  </div>
+  <canvas id="chess"></canvas>
 </template>
 <script>
+let chess = function (id) {
+  let canvas = document.querySelector(`#${id}`)
+  let context = canvas.getContext('2d')
+  let me = true
+  let chessBox = [] // 用于存放棋盘中落子的情况
+
+  for (let i = 0; i < 15; i++) {
+    chessBox[i] = []
+    for (let j = 0; j < 15; j++) {
+      chessBox[i][j] = 0 // 初始值为0
+    }
+  }
+
+  function drawChessBoard () {
+    for (let i = 0; i < 15; i++) {
+      context.strokeStyle = '#D6D1D1'
+      context.moveTo(15 + i * 30, 15) // 垂直方向画15根线，相距30px
+      context.lineTo(15 + i * 30, 435)
+      context.stroke()
+      context.moveTo(15, 15 + i * 30) // 水平方向画15根线，相距30px;棋盘为14*14；
+      context.lineTo(435, 15 + i * 30)
+      context.stroke()
+    }
+  }
+
+  drawChessBoard() // 绘制棋盘
+
+  function oneStep (i, j, k) {
+    context.beginPath()
+    context.arc(15 + i * 30, 15 + j * 30, 13, 0, 2 * Math.PI) // 绘制棋子
+    let g = context.createRadialGradient(
+      15 + i * 30,
+      15 + j * 30,
+      13,
+      15 + i * 30,
+      15 + j * 30,
+      0
+    ) // 设置渐变
+    if (k) {
+      // k=true是黑棋，否则是白棋
+      g.addColorStop(0, '#0A0A0A') // 黑棋
+      g.addColorStop(1, '#636766')
+    } else {
+      g.addColorStop(0, '#D1D1D1') // 白棋
+      g.addColorStop(1, '#F9F9F9')
+    }
+    context.fillStyle = g
+    context.fill()
+    context.closePath()
+  }
+
+  chess.onclick = function (e) {
+    let x = e.offsetX // 相对于棋盘左上角的x坐标
+    let y = e.offsetY // 相对于棋盘左上角的y坐标
+    let i = Math.floor(x / 30)
+    let j = Math.floor(y / 30)
+    if (chessBox[i][j] === 0) { // 原来是==
+      oneStep(i, j, me)
+      if (me) {
+        chessBox[i][j] = 1
+      } else {
+        chessBox[i][j] = 2
+      }
+      me = !me // 下一步白棋
+    }
+  }
+}
+
 export default {
 }
 </script>
