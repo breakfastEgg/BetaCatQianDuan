@@ -8,7 +8,18 @@ export default new Router({
     {
       path: '/',
       name: 'Layout2',
-      component: () => ({component: import('@/components/Layout2.vue'), loading: null, error: null})
+      component: () => ({component: import('@/components/Layout2'), loading: null, error: null}),
+      children: [
+        {
+          path: 'ChessBoard',
+          name: 'ChessBoard',
+          components: {
+            sideBar: () => ({component: import('@/components/content/SideBarOption'), loading: null, error: null}),
+            default: () => ({component: import('@/components/content/ChessBoard'), loading: null, error: null})
+          },
+          children: []
+        }
+      ]
     }
   ]
 })
