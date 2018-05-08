@@ -1,9 +1,12 @@
 //  deb784棋盘颜色
 <style scoped>
+.chessPadding{
+  padding: 10px;
+  margin: 0 auto
+}
 </style>
 <template>
-  <div>我是期盼</div>
-  <!-- <canvas id="chess"></canvas> -->
+  <canvas class="chessPadding"></canvas>
 </template>
 <script>
 let chess = function (id) {
@@ -75,5 +78,43 @@ let chess = function (id) {
 }
 
 export default {
+  mounted () {
+    this.$nextTick(function () {
+      this.resizeCanvas()
+    })
+    window.onresize = () => {
+      this.resizeCanvas()
+    }
+  },
+  methods: {
+    resizeCanvas () {
+      const paddingOfCanvas = 10
+      const parentPadding = 16
+
+      let context = this.$el.getContext('2d')
+      let offset
+      let maxLength
+      let chessHeight
+      let chessWidth
+
+      chessHeight = this.$parent.$el.clientHeight - 2 * (parentPadding + paddingOfCanvas)
+      chessWidth = this.$parent.$el.clientWidth - 2 * (parentPadding + paddingOfCanvas)
+
+      maxLength = chessHeight >= chessWidth ? chessWidth : chessHeight
+      this.$el.height = this.$el.width = maxLength
+
+      offset = maxLength / 14
+
+      for (let i = 0; i < 15; i++) {
+        context.strokeStyle = '#D6D1D1'
+        context.moveTo(i * offset, 0)
+        context.lineTo(i * offset, offset * 14)
+        context.stroke()
+        context.moveTo(0, i * offset)
+        context.lineTo(offset * 14, i * offset)
+        context.stroke()
+      }
+    }
+  }
 }
 </script>
