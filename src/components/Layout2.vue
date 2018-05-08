@@ -15,7 +15,7 @@
         <NavBar></NavBar>
         <SideBarAndContent>
           <router-view name="sideBar" slot="sideBar"></router-view>
-          <router-view slot="content"></router-view>
+          <router-view name="content" slot="content"></router-view>
         </SideBarAndContent>
     </div>
 </template>

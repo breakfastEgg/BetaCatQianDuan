@@ -1,90 +1,90 @@
 <template>
     <div class="layout">
-        <Sider v-if="show" :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
-            <Card :style="{background: `#495060`, border: 0, height: `64px`}" :padding="0">
-                <img src="../assets/logo.png">
-            </Card>
-            <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']">
-                <Submenu name="1">
-                    <template slot="title">
-                        <Icon type="ios-navigate"></Icon>
-                        Item 1
-                    </template>
-                    <MenuItem name="1-1">Option 1</MenuItem>
-                    <MenuItem name="1-2">Option 2</MenuItem>
-                    <MenuItem name="1-3">Option 3</MenuItem>
-                </Submenu>
-                <Submenu name="2">
-                    <template slot="title">
-                        <Icon type="ios-keypad"></Icon>
-                        Item 2
-                    </template>
-                    <MenuItem name="2-1">Option 1</MenuItem>
-                    <MenuItem name="2-2">Option 2</MenuItem>
-                </Submenu>
-                <Submenu name="3">
-                    <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
-                        Item 3
-                    </template>
-                    <MenuItem name="3-1">Option 1</MenuItem>
-                    <MenuItem name="3-2">Option 322</MenuItem>
-                </Submenu>
+      <Sider v-if="show" :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
+          <Card :style="{background: `#495060`, border: 0, height: `64px`}" :padding="0">
+              <img src="../assets/logo.png">
+          </Card>
+          <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']">
+              <Submenu name="1">
+                <template slot="title">
+                    <Icon type="ios-navigate"></Icon>
+                    Item 1
+                </template>
+                <MenuItem name="1-1">Option 1</MenuItem>
+                <MenuItem name="1-2">Option 2</MenuItem>
+                <MenuItem name="1-3">Option 3</MenuItem>
+              </Submenu>
+              <Submenu name="2">
+                <template slot="title">
+                    <Icon type="ios-keypad"></Icon>
+                    Item 2
+                </template>
+                <MenuItem name="2-1">Option 1</MenuItem>
+                <MenuItem name="2-2">Option 2</MenuItem>
+              </Submenu>
+              <Submenu name="3">
+                <template slot="title">
+                    <Icon type="ios-analytics"></Icon>
+                    Item 3
+                </template>
+                <MenuItem name="3-1">Option 1</MenuItem>
+                <MenuItem name="3-2">Option 322</MenuItem>
+              </Submenu>
+          </Menu>
+      </Sider>
+      <Layout :style="ifMargin">
+        <Header :style="{background: '#fff', padding: '0', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
+            <Menu mode="horizontal" active-name="1" :style="{height: '64px'}">
+              <MenuItem name="1">
+                  <Icon type="ios-paper"></Icon>
+                  内13容管理
+              </MenuItem>
+              <MenuItem name="2">
+                  <Icon type="ios-people"></Icon>
+                  用户管理
+              </MenuItem>
+              <Submenu name="3">
+                  <template slot="title">
+                  <Icon type="stats-bars"></Icon>
+                  统计分析
+                  </template>
+                  <MenuGroup title="使用">
+                      <MenuItem name="3-1">新增和启动</MenuItem>
+                      <MenuItem name="3-2">活跃分析</MenuItem>
+                      <MenuItem name="3-3">时段分析</MenuItem>
+                  </MenuGroup>
+                  <MenuGroup title="留存">
+                      <MenuItem name="3-4">用户留存</MenuItem>
+                      <MenuItem name="3-5">流失用户</MenuItem>
+                  </MenuGroup>
+              </Submenu>
+              <MenuItem name="4">
+                  <Icon type="settings"></Icon>
+                  综合设置
+              </MenuItem>
+              <Submenu name="5" :style="{float: 'right'}">
+                  <template slot="title">
+                  <Icon type="stats-bars"></Icon>
+                  统计分析
+                  </template>
+                  <MenuGroup title="使用">
+                      <MenuItem name="3-1">新增和启动</MenuItem>
+                      <MenuItem name="3-2">活跃分析</MenuItem>
+                      <MenuItem name="3-3">时段分析</MenuItem>
+                  </MenuGroup>
+                  <MenuGroup title="留存">
+                      <MenuItem name="3-4">用户留存</MenuItem>
+                      <MenuItem name="3-5">流失用户</MenuItem>
+                  </MenuGroup>
+              </Submenu>
             </Menu>
-        </Sider>
-        <Layout :style="ifMargin">
-            <Header :style="{background: '#fff', padding: '0', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
-                <Menu mode="horizontal" active-name="1" :style="{height: '64px'}">
-                    <MenuItem name="1">
-                        <Icon type="ios-paper"></Icon>
-                        内13容管理
-                    </MenuItem>
-                    <MenuItem name="2">
-                        <Icon type="ios-people"></Icon>
-                        用户管理
-                    </MenuItem>
-                    <Submenu name="3">
-                        <template slot="title">
-                        <Icon type="stats-bars"></Icon>
-                        统计分析
-                        </template>
-                        <MenuGroup title="使用">
-                            <MenuItem name="3-1">新增和启动</MenuItem>
-                            <MenuItem name="3-2">活跃分析</MenuItem>
-                            <MenuItem name="3-3">时段分析</MenuItem>
-                        </MenuGroup>
-                        <MenuGroup title="留存">
-                            <MenuItem name="3-4">用户留存</MenuItem>
-                            <MenuItem name="3-5">流失用户</MenuItem>
-                        </MenuGroup>
-                    </Submenu>
-                    <MenuItem name="4">
-                        <Icon type="settings"></Icon>
-                        综合设置
-                    </MenuItem>
-                    <Submenu name="5" :style="{float: 'right'}">
-                        <template slot="title">
-                        <Icon type="stats-bars"></Icon>
-                        统计分析
-                        </template>
-                        <MenuGroup title="使用">
-                            <MenuItem name="3-1">新增和启动</MenuItem>
-                            <MenuItem name="3-2">活跃分析</MenuItem>
-                            <MenuItem name="3-3">时段分析</MenuItem>
-                        </MenuGroup>
-                        <MenuGroup title="留存">
-                            <MenuItem name="3-4">用户留存</MenuItem>
-                            <MenuItem name="3-5">流失用户</MenuItem>
-                        </MenuGroup>
-                    </Submenu>
-                </Menu>
-            </Header>
-            <Content :style="{padding: '10px'}">
-                <Card>
-                    <div class="dw">Content</div>
-                </Card>
-            </Content>
-        </Layout>
+        </Header>
+        <Content :style="{padding: '10px'}">
+          <Card>
+              <div class="dw">Content</div>
+          </Card>
+        </Content>
+      </Layout>
     </div>
 </template>
 <script>

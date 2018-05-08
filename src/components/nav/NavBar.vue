@@ -31,7 +31,7 @@
         <router-link :to="{name: 'ChessBoard'}">
           <MenuItem name="2">
             <Icon type="ios-keypad"></Icon>
-            我参与的项目
+            我的棋盘
           </MenuItem>
         </router-link>
         <MenuItem name="3">

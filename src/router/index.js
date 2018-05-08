@@ -7,6 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
+      base: '/app/',
       name: 'Layout2',
       component: () => ({component: import('@/components/Layout2'), loading: null, error: null}),
       children: [
@@ -15,7 +16,7 @@ export default new Router({
           name: 'ChessBoard',
           components: {
             sideBar: () => ({component: import('@/components/content/SideBarOption'), loading: null, error: null}),
-            default: () => ({component: import('@/components/content/ChessBoard'), loading: null, error: null})
+            content: () => ({component: import('@/components/content/ChessBoard'), loading: null, error: null})
           },
           children: []
         }
