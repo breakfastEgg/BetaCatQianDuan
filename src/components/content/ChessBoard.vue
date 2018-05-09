@@ -11,73 +11,47 @@
 }
 </style>
 <template>
-  <canvas class="chess-padding" @click=""></canvas>
+  <canvas class="chess-padding" @click="chess" @mouseover="scaleJudge"></canvas>
 </template>
 <script>
-  const lineNum = 20;
-  const lineWidth = 2
-  // function oneStep (i, j, k) {
-  //   context.beginPath()
-  //   context.arc(15 + i * 30, 15 + j * 30, 13, 0, 2 * Math.PI) // 绘制棋子
-  //   let g = context.createRadialGradient(
-  //     15 + i * 30,
-  //     15 + j * 30,
-  //     13,
-  //     15 + i * 30,
-  //     15 + j * 30,
-  //     0
-  //   ) // 设置渐变
-  //   if (k) {
-  //     // k=true是黑棋，否则是白棋
-  //     g.addColorStop(0, '#0A0A0A') // 黑棋
-  //     g.addColorStop(1, '#636766')
-  //   } else {
-  //     g.addColorStop(0, '#D1D1D1') // 白棋
-  //     g.addColorStop(1, '#F9F9F9')
-  //   }
-  //   context.fillStyle = g
-  //   context.fill()
-  //   context.closePath()
-  // }
-
-  // chess.onclick = function (e) {
-  //   let x = e.offsetX // 相对于棋盘左上角的x坐标
-  //   let y = e.offsetY // 相对于棋盘左上角的y坐标
-  //   let i = Math.floor(x / 30)
-  //   let j = Math.floor(y / 30)
-  //   if (chessBox[i][j] === 0) { // 原来是==
-  //     oneStep(i, j, me)
-  //     if (me) {
-  //       chessBox[i][j] = 1
-  //     } else {
-  //       chessBox[i][j] = 2
-  //     }
-  //     me = !me // 下一步白棋
-  //   }
-  // }
+const lineNum = 20
+const lineWidth = 1
 
 export default {
   data () {
     return {
-      chessBox: [lineNum - 1][lineNum - 1] // 落子情况
+      chessBox: new Array(lineNum - 1), // 落子情况
+      offset: 0,
+      me: false
     }
   },
   mounted () {
+    let i = 0
+    let j = 0
+
     this.$nextTick(function () {
       this.resizeCanvas()
     })
     window.onresize = () => {
       this.resizeCanvas()
     }
+
+    for (i; i < lineNum; i++) {
+      j = 0
+      this.chessBox[i] = new Array(lineNum - 1)
+      for (j; j < lineNum; j++) {
+        this.chessBox[i][j] = 0
+      }
+    }
   },
   methods: {
     resizeCanvas () {
       const paddingOfCanvas = 10
       const parentPadding = 16
-    
+
       let context = this.$el.getContext('2d')
-      let offset
       let maxLength
+      let offset
       let chessHeight
       let chessWidth
 
@@ -85,11 +59,11 @@ export default {
       chessWidth = this.$parent.$el.clientWidth - 2 * (parentPadding + paddingOfCanvas)
 
       maxLength = chessHeight >= chessWidth ? chessWidth : chessHeight
-      this.$el.setAttribute('width', maxLength)
-      this.$el.setAttribute('height', maxLength)
-      // this.$el.height = this.$el.width = maxLength
+      // this.$el.setAttribute('width', maxLength)
+      // this.$el.setAttribute('height', maxLength)
+      this.$el.height = this.$el.width = maxLength
 
-      offset = maxLength / (lineNum - 1)
+      offset = this.offset = maxLength / (lineNum - 1)
 
       context.lineWidth = lineWidth
       for (let i = 0; i < lineNum; i++) {
@@ -102,7 +76,53 @@ export default {
         context.stroke()
       }
     },
-    goChecss () {
+
+    oneStep (i, j, k) {
+      let offset = this.offset
+      let context = this.$el.getContext('2d')
+      let g = context.createRadialGradient(
+        i * offset,
+        j * offset,
+        offset / 2,
+        i * offset,
+        j * offset,
+        0
+      ) // 设置渐变
+
+      context.beginPath()
+      context.arc(i * offset, j * offset, offset / 2, 0, 2 * Math.PI) // 绘制棋子
+
+      if (k) {
+        // k=true是黑棋，否则是白棋
+        g.addColorStop(0, '#0A0A0A') // 黑棋
+        g.addColorStop(1, '#636766')
+      } else {
+        g.addColorStop(0, '#D1D1D1') // 白棋
+        g.addColorStop(1, '#fff')
+      }
+      context.fillStyle = g
+      context.fill()
+      context.closePath()
+    },
+
+    chess (e) {
+      let x = e.offsetX // 相对于棋盘左上角的x坐标
+      let y = e.offsetY // 相对于棋盘左上角的y坐标
+      let i = Math.floor(x / this.offset)
+      let j = Math.floor(y / this.offset)
+
+      if (this.chessBox[i][j] === 0) { // 原来是==
+        this.oneStep(i, j, this.me)
+        if (this.me) {
+          this.chessBox[i][j] = 1
+        } else {
+          this.chessBox[i][j] = 2
+        }
+        this.me = !this.me // 下一步白棋
+      }
+    },
+
+    scaleJudge () {
 
     }
   }
