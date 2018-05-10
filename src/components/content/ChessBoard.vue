@@ -11,7 +11,7 @@
 }
 </style>
 <template>
-  <canvas class="chess-padding" @click="chess" @mouseover="scaleJudge"></canvas>
+  <canvas class="chess-padding" @click="chess" @mousemove="scaleJudge"></canvas>
 </template>
 <script>
 const lineNum = 20
@@ -22,7 +22,10 @@ export default {
     return {
       chessBox: new Array(lineNum - 1), // 落子情况
       offset: 0,
-      me: false
+      me: false,
+      scaleParam: 3,
+      canIChess: false,
+      paddingOfCanvas: 10
     }
   },
   mounted () {
@@ -46,7 +49,6 @@ export default {
   },
   methods: {
     resizeCanvas () {
-      const paddingOfCanvas = 10
       const parentPadding = 16
 
       let context = this.$el.getContext('2d')
@@ -55,12 +57,10 @@ export default {
       let chessHeight
       let chessWidth
 
-      chessHeight = this.$parent.$el.clientHeight - 2 * (parentPadding + paddingOfCanvas)
-      chessWidth = this.$parent.$el.clientWidth - 2 * (parentPadding + paddingOfCanvas)
+      chessHeight = this.$parent.$el.clientHeight - 2 * (parentPadding + this.paddingOfCanvas)
+      chessWidth = this.$parent.$el.clientWidth - 2 * (parentPadding + this.paddingOfCanvas)
 
       maxLength = chessHeight >= chessWidth ? chessWidth : chessHeight
-      // this.$el.setAttribute('width', maxLength)
-      // this.$el.setAttribute('height', maxLength)
       this.$el.height = this.$el.width = maxLength
 
       offset = this.offset = maxLength / (lineNum - 1)
@@ -111,6 +111,10 @@ export default {
       let i = Math.floor(x / this.offset)
       let j = Math.floor(y / this.offset)
 
+      if (!this.canIChess) {
+        return false
+      }
+
       if (this.chessBox[i][j] === 0) { // 原来是==
         this.oneStep(i, j, this.me)
         if (this.me) {
@@ -122,8 +126,20 @@ export default {
       }
     },
 
-    scaleJudge () {
+    scaleJudge (e) {
+      let x = e.offsetX - this.paddingOfCanvas// 相对于棋盘左上角的x坐标
+      let y = e.offsetY - this.paddingOfCanvas// 相对于棋盘左上角的y坐标
+      let multi = this.offset / this.scaleParam
+      let absX = Math.abs((Math.round(x / this.offset) * this.offset) - x)
+      let absY = Math.abs((Math.round(y / this.offset) * this.offset) - y)
 
+      if (absX <= multi && absY <= multi) {
+        this.canIChess = true
+        this.$el.style.cursor = 'pointer'
+      } else {
+        this.canIChess = false
+        this.$el.style.cursor = 'default'
+      }
     }
   }
 }
