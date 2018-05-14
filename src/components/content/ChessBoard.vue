@@ -21,7 +21,8 @@ export default {
   data () {
     return {
       chessBox: new Array(lineNum - 1), // 落子情况
-      offset: 0,
+      offsetOfTwoLine: 0,
+      radiusOfChess: 0,
       me: false,
       scaleParam: 3,
       canIChess: false,
@@ -35,6 +36,7 @@ export default {
     this.$nextTick(function () {
       this.resizeCanvas()
     })
+
     window.onresize = () => {
       this.resizeCanvas()
     }
@@ -53,7 +55,7 @@ export default {
 
       let context = this.$el.getContext('2d')
       let maxLength
-      let offset
+      let offsetOfTwoLine
       let chessHeight
       let chessWidth
 
@@ -63,34 +65,38 @@ export default {
       maxLength = chessHeight >= chessWidth ? chessWidth : chessHeight
       this.$el.height = this.$el.width = maxLength
 
-      offset = this.offset = maxLength / (lineNum - 1)
+      offsetOfTwoLine = this.offsetOfTwoLine = maxLength / lineNum
 
       context.lineWidth = lineWidth
       for (let i = 0; i < lineNum; i++) {
+        let a = (i + 1/2) * offsetOfTwoLine
+        let b = offsetOfTwoLine * (lineNum - 1/2)
+        let halfOffset = offsetOfTwoLine / 2
         context.strokeStyle = '#fff'
-        context.moveTo(i * offset, 0)
-        context.lineTo(i * offset, offset * (lineNum - 1))
+        context.moveTo(a, halfOffset)
+        context.lineTo(a, b )
         context.stroke()
-        context.moveTo(0, i * offset)
-        context.lineTo(offset * (lineNum - 1), i * offset)
+        context.moveTo(halfOffset, a)
+        context.lineTo(b, a)
         context.stroke()
       }
     },
 
     oneStep (i, j, k) {
-      let offset = this.offset
+      let offsetOfTwoLine = this.offsetOfTwoLine
+      let halfOffset = offsetOfTwoLine / 2
       let context = this.$el.getContext('2d')
       let g = context.createRadialGradient(
-        i * offset,
-        j * offset,
-        offset / 2,
-        i * offset,
-        j * offset,
+        (i + 1/2) * offsetOfTwoLine,
+        (j + 1/2) * offsetOfTwoLine,
+        offsetOfTwoLine / 2,
+        (i + 1/2) * offsetOfTwoLine,
+        (j + 1/2) * offsetOfTwoLine,
         0
       ) // 设置渐变
 
       context.beginPath()
-      context.arc(i * offset, j * offset, offset / 2, 0, 2 * Math.PI) // 绘制棋子
+      context.arc((i + 1/2) * offsetOfTwoLine, (j + 1/2) * offsetOfTwoLine, halfOffset, 0, 2 * Math.PI) // 绘制棋子
 
       if (k) {
         // k=true是黑棋，否则是白棋
@@ -108,8 +114,9 @@ export default {
     chess (e) {
       let x = e.offsetX // 相对于棋盘左上角的x坐标
       let y = e.offsetY // 相对于棋盘左上角的y坐标
-      let i = Math.floor(x / this.offset)
-      let j = Math.floor(y / this.offset)
+      let halfOffset = this.offsetOfTwoLine / 2
+      let i = Math.floor((x - halfOffset) / this.offsetOfTwoLine)
+      let j = Math.floor((y - halfOffset) / this.offsetOfTwoLine)
 
       if (!this.canIChess) {
         return false
@@ -127,11 +134,12 @@ export default {
     },
 
     scaleJudge (e) {
-      let x = e.offsetX - this.paddingOfCanvas// 相对于棋盘左上角的x坐标
-      let y = e.offsetY - this.paddingOfCanvas// 相对于棋盘左上角的y坐标
-      let multi = this.offset / this.scaleParam
-      let absX = Math.abs((Math.round(x / this.offset) * this.offset) - x)
-      let absY = Math.abs((Math.round(y / this.offset) * this.offset) - y)
+      let halfOffset = this.offsetOfTwoLine / 2
+      let x = e.offsetX - this.paddingOfCanvas - halfOffset// 相对于棋盘左上角的x坐标
+      let y = e.offsetY - this.paddingOfCanvas - halfOffset// 相对于棋盘左上角的y坐标
+      let multi = this.offsetOfTwoLine / this.scaleParam
+      let absX = Math.abs((Math.round(x / this.offsetOfTwoLine) * this.offsetOfTwoLine) - x)
+      let absY = Math.abs((Math.round(y / this.offsetOfTwoLine) * this.offsetOfTwoLine) - y)
 
       if (absX <= multi && absY <= multi) {
         this.canIChess = true
