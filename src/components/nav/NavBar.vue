@@ -16,20 +16,24 @@
 .ivu-menu-horizontal.ivu-menu-light:after{
   height: 0;
 }
+.ivu-menu-item{
+  border-bottom: 4px
+}
+
 </style>
 <template>
   <Header :style="{padding: '0'}">
-    <Menu mode="horizontal" theme="light" active-name="1" :style="{height: '64px', borderBottom: '1px solid #dddee1'}">
+    <Menu mode="horizontal" theme="light" active-name="1" :style="{height: '65px', borderBottom: '1px solid #dddee1'}">
       <img src="../../assets/logo.png" alt="" :style="{backgroundColor: '#495060', float: 'left'}">
       <div class="layout-nav">
         <router-link :to="{name: 'Layout2'}">
-          <MenuItem name="1">
+          <MenuItem name="1" @click.native="ifShowSideBar(false)">
             <Icon type="ios-navigate"></Icon>
             所有项目
           </MenuItem>
         </router-link>
         <router-link :to="{name: 'ChessBoard'}">
-          <MenuItem name="2">
+          <MenuItem name="2" @click.native="ifShowSideBar(true)">
             <Icon type="ios-keypad"></Icon>
             我的棋盘
           </MenuItem>
@@ -58,6 +62,16 @@
   </Header>
 </template>
 <script>
-export default{
+import BUS from '../common/bus'
+
+export default {
+  methods: {
+    ifShowSideBar (ifShow) {
+      BUS.$emit('ifShowSideBar', ifShow)
+    },
+    asd () {
+      console.log(1)
+    }
+  }
 }
 </script>

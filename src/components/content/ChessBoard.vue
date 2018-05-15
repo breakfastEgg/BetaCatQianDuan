@@ -69,12 +69,12 @@ export default {
 
       context.lineWidth = lineWidth
       for (let i = 0; i < lineNum; i++) {
-        let a = (i + 1/2) * offsetOfTwoLine
-        let b = offsetOfTwoLine * (lineNum - 1/2)
+        let a = (i + 1 / 2) * offsetOfTwoLine
+        let b = offsetOfTwoLine * (lineNum - 1 / 2)
         let halfOffset = offsetOfTwoLine / 2
         context.strokeStyle = '#fff'
         context.moveTo(a, halfOffset)
-        context.lineTo(a, b )
+        context.lineTo(a, b)
         context.stroke()
         context.moveTo(halfOffset, a)
         context.lineTo(b, a)
@@ -87,16 +87,16 @@ export default {
       let halfOffset = offsetOfTwoLine / 2
       let context = this.$el.getContext('2d')
       let g = context.createRadialGradient(
-        (i + 1/2) * offsetOfTwoLine,
-        (j + 1/2) * offsetOfTwoLine,
+        (i + 1 / 2) * offsetOfTwoLine,
+        (j + 1 / 2) * offsetOfTwoLine,
         offsetOfTwoLine / 2,
-        (i + 1/2) * offsetOfTwoLine,
-        (j + 1/2) * offsetOfTwoLine,
+        (i + 1 / 2) * offsetOfTwoLine,
+        (j + 1 / 2) * offsetOfTwoLine,
         0
       ) // 设置渐变
 
       context.beginPath()
-      context.arc((i + 1/2) * offsetOfTwoLine, (j + 1/2) * offsetOfTwoLine, halfOffset, 0, 2 * Math.PI) // 绘制棋子
+      context.arc((i + 1 / 2) * offsetOfTwoLine, (j + 1 / 2) * offsetOfTwoLine, halfOffset, 0, 2 * Math.PI) // 绘制棋子
 
       if (k) {
         // k=true是黑棋，否则是白棋

@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      base: '/app/',
+      base: '/dist/',
       name: 'Layout2',
       component: () => ({component: import('@/components/Layout2'), loading: null, error: null}),
       children: [
